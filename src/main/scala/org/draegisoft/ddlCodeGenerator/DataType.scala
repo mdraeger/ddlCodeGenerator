@@ -12,6 +12,7 @@ case class BooleanType() extends DataType
 
 case class StringType(length: Int) extends DataType
 case class TextType() extends DataType
+case class SetType(allowedValues: Set[String]) extends DataType
 
 case class DateType() extends DataType
 case class TimeType() extends DataType

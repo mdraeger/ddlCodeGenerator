@@ -25,6 +25,7 @@ class MySqlTableDdlParserSpec extends TableDdlParser with MySQLTableDdlParser wi
       parsing("decimal(10,2)") should equal (DecimalType(10, 2))
       parsing("text") should equal (TextType())
       parsing("varchar(255)") should equal (StringType(255))
+      parsing("set('foo', 'bar', 'baz')") should equal (SetType(Set("foo", "bar", "baz")))
       parsing("smallint(2)") should equal (IntegerType(2))
       parsing("mediumint(10)") should equal (IntegerType(10))
       parsing("double") should equal (DoubleType())

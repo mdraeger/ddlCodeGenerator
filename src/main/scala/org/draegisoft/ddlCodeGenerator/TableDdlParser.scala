@@ -39,7 +39,6 @@ trait TableDdlParser extends JavaTokenParsers {
 }
 
   def stringType: Parser[DataType] =  ("varchar" | "VARCHAR" | "char" | "CHAR") ~ "(" ~> wholeNumber <~ ")" ^^ {case s => StringType(s.toInt)}
-
   def textType: Parser[DataType] = ("TEXT" | "text") ^^ {case s => TextType()}
 
   def timestampType: Parser[DataType] = ("TIMESTAMP" | "timestamp") ^^ {case s => TimestampType()}

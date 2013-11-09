@@ -22,12 +22,16 @@ class MySqlTableDdlParserSpec extends TableDdlParser with MySQLTableDdlParser wi
       parsing("integer(10)") should equal (IntegerType(10))
       parsing("tinyint(2)") should equal (IntegerType(2))
       parsing("tinyint(1)") should equal (BooleanType())
+      parsing("decimal(10,2)") should equal (DecimalType(10, 2))
       parsing("text") should equal (TextType())
       parsing("varchar(255)") should equal (StringType(255))
       parsing("smallint(2)") should equal (IntegerType(2))
       parsing("mediumint(10)") should equal (IntegerType(10))
       parsing("double") should equal (DoubleType())
       parsing("timestamp") should equal (TimestampType())
+     
+      assertFail("decimal(1,2,3)") // too many arguments
+      assertFail("decimal(3)") // too few arguments
    }
 
 

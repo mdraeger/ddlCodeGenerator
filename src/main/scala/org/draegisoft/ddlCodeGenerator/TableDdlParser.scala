@@ -25,17 +25,18 @@ trait TableDdlParser extends JavaTokenParsers {
   def dataType: Parser[DataType] = numericType | charType | dateTimeType
 
 
-  def numericType = intType | floatType | doubleType 
+  def numericType = intType | floatType | doubleType | decimalType
 
   def charType = stringType | textType
 
   def dateTimeType = timestampType | dateType | timeType 
   
   def intType: Parser[DataType] =  ("INTEGER" | "integer" | "INT" | "int" | "SMALLINT" | "smallint" ) ~ "(" ~> wholeNumber <~ ")" ^^ {case s => IntegerType(s.toInt)}
-  
   def floatType: Parser[DataType] = ("FLOAT" | "float" | "REAL" | "real") ^^ {case s => FloatType()}
-
   def doubleType: Parser[DataType] = ("DOUBLE" | "double") ^^ {case s => DoubleType()}
+  def decimalType: Parser[DataType] = ("DECIMAL" | "decimal") ~ "(" ~> repsep(wholeNumber, ",") <~ ")" ^^ {case  precision:: scale:: Nil => DecimalType(precision.toInt, scale.toInt)
+ case _ => throw new IllegalArgumentException("Decimal without scale or too many arguments")
+}
 
   def stringType: Parser[DataType] =  ("varchar" | "VARCHAR" | "char" | "CHAR") ~ "(" ~> wholeNumber <~ ")" ^^ {case s => StringType(s.toInt)}
 

@@ -6,6 +6,7 @@ case class IntegerType(length: Int) extends DataType
 case class BigIntType(length: Int) extends DataType
 case class FloatType() extends DataType
 case class DoubleType() extends DataType
+case class DecimalType(precision: Int, scale: Int) extends DataType
 
 case class BooleanType() extends DataType
 

@@ -2,12 +2,15 @@ package org.draegisoft.ddlCodeGenerator
 
 import scala.util.parsing.combinator._
 
-class TableDdlParser extends JavaTokenParsers {
+/** 
+ * This parser covers the part of ANSI SQL that I'm interested in. 
+ */
+trait TableDdlParser extends JavaTokenParsers {
   
   def tables: Parser[Map[String, Any]] = rep(table) ^^ { Map() ++ _ }
   
   def table: Parser[(String,Any)] = 
-    ("TABLE" ~ tableName ~ columns 
+    (("CREATE TABLE IF NOT EXISTS" | "CREATE TABLE" | "TABLE") ~ tableName ~ columns 
        ^^ { case "TABLE" ~ tableName ~ tableContents => (tableName,tableContents) })
   
   def tableName: Parser[String] = ident ^^ { case ident => ident }
@@ -19,7 +22,27 @@ class TableDdlParser extends JavaTokenParsers {
     
   def columnName: Parser[String] = ident ^^ { case ident => ident }
   
-  def dataType: Parser[Any] = "VARCHAR" | "INTEGER"
+  def dataType: Parser[DataType] = numericType | charType | dateTimeType
+
+
+  def numericType = intType | floatType | doubleType 
+
+  def charType = stringType | textType
+
+  def dateTimeType = timestampType | dateType | timeType 
   
+  def intType: Parser[DataType] =  ("INTEGER" | "integer" | "INT" | "int" | "SMALLINT" | "smallint" ) ~ "(" ~> wholeNumber <~ ")" ^^ {case s => IntegerType(s.toInt)}
+  
+  def floatType: Parser[DataType] = ("FLOAT" | "float" | "REAL" | "real") ^^ {case s => FloatType()}
+
+  def doubleType: Parser[DataType] = ("DOUBLE" | "double") ^^ {case s => DoubleType()}
+
+  def stringType: Parser[DataType] =  ("varchar" | "VARCHAR" | "char" | "CHAR") ~ "(" ~> wholeNumber <~ ")" ^^ {case s => StringType(s.toInt)}
+
+  def textType: Parser[DataType] = ("TEXT" | "text") ^^ {case s => TextType()}
+
+  def timestampType: Parser[DataType] = ("TIMESTAMP" | "timestamp") ^^ {case s => TimestampType()}
+  def dateType: Parser[DataType] = ("DATE" | "date") ^^ {case s => DateType()}
+  def timeType: Parser[DataType] = ("TIME" | "time") ^^ {case s => TimeType()}
 }
 

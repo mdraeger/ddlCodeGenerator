@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ColumnType	src/main/scala/org/draegisoft/ddlCodeGenerator/ColumnType.scala	/^sealed trait ColumnType$/;"	t
+DataType	src/main/scala/org/draegisoft/ddlCodeGenerator/DataType.scala	/^sealed trait DataType$/;"	t
+MySQLTableDdlParser	src/main/scala/org/draegisoft/ddlCodeGenerator/mysql/MySQLTableDdlParser.scala	/^trait MySQLTableDdlParser extends TableDdlParser {$/;"	t
+PkColumn	src/main/scala/org/draegisoft/ddlCodeGenerator/ColumnType.scala	/^case class PkColumn(name: String, dataType: DataType)$/;"	c
+ReferenceColumn	src/main/scala/org/draegisoft/ddlCodeGenerator/ColumnType.scala	/^case class ReferenceColumn(name: String, dataType: DataType, target: String) \/\/ use String instead of ColumnType to avoid an additional sweep$/;"	c
+SimpleColumn	src/main/scala/org/draegisoft/ddlCodeGenerator/ColumnType.scala	/^case class SimpleColumn(name: String, dataType: DataType)$/;"	c
+TableDdlParser	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^trait TableDdlParser extends JavaTokenParsers {$/;"	t
+TableDdlParserSpec	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^class TableDdlParserSpec extends Specification {$/;"	c
+TestParser	src/test/scala/org/draegisoft/ddlCodeGenerator/test/MyTestClass.scala	/^class TestParser extends MySQLTableDdlParser {$/;"	c
+column	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def column: Parser[(String,Any)] = $/;"	m
+columnName	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def columnName: Parser[String] = ident ^^ { case ident => ident }$/;"	m
+columns	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def columns: Parser[Map[String, Any]] = "("~> repsep(column, ",") <~")" ^^ { Map() ++ _ }$/;"	m
+dataType	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def dataType: Parser[Any] = "VARCHAR" | "INTEGER"$/;"	m
+input	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^  val input = """TABLE person (first_name VARCHAR, last_name VARCHAR, age INTEGER)$/;"	l
+org.draegisoft.ddlCodeGenerator	src/main/scala/org/draegisoft/ddlCodeGenerator/ColumnType.scala	/^package org.draegisoft.ddlCodeGenerator$/;"	p
+org.draegisoft.ddlCodeGenerator	src/main/scala/org/draegisoft/ddlCodeGenerator/DataType.scala	/^package org.draegisoft.ddlCodeGenerator$/;"	p
+org.draegisoft.ddlCodeGenerator	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^package org.draegisoft.ddlCodeGenerator$/;"	p
+org.draegisoft.ddlCodeGenerator.mysql	src/main/scala/org/draegisoft/ddlCodeGenerator/mysql/MySQLTableDdlParser.scala	/^package org.draegisoft.ddlCodeGenerator.mysql$/;"	p
+org.draegisoft.ddlCodeGenerator.test	src/test/scala/org/draegisoft/ddlCodeGenerator/test/MyTestClass.scala	/^package org.draegisoft.ddlCodeGenerator.test$/;"	p
+org.draegisoft.ddlCodeGenerator.test	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^package org.draegisoft.ddlCodeGenerator.test$/;"	p
+output	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^  val output = Map("person" -> Map("first_name" -> "VARCHAR", $/;"	l
+table	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def table: Parser[(String,Any)] = $/;"	m
+tableDdlParser	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^  val tableDdlParser = new TestParser()$/;"	l
+tableName	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def tableName: Parser[String] = ident ^^ { case ident => ident }$/;"	m
+tables	src/main/scala/org/draegisoft/ddlCodeGenerator/TableDdlParser.scala	/^  def tables: Parser[Map[String, Any]] = rep(table) ^^ { Map() ++ _ }$/;"	m
+tables	src/test/scala/org/draegisoft/ddlCodeGenerator/test/TableDdlParserSpec.scala	/^  val tables = tableDdlParser.tables$/;"	l

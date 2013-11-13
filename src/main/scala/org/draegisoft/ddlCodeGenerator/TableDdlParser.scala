@@ -15,10 +15,10 @@ trait TableDdlParser extends JavaTokenParsers {
   
   def tableName: Parser[String] = ident ^^ { case ident => ident }
   
-  def columns: Parser[Map[String, Any]] = "("~> repsep(column, ",") <~")" ^^ { Map() ++ _ }
+  def columns: Parser[List[ColumnType]] = "("~> repsep(column, ",") <~")" ^^ { List() ++ _ }
   
-  def column: Parser[(String,Any)] = 
-    columnName ~ dataType ^^ { case columnName ~ dataType => (columnName,dataType) }
+  def column: Parser[ColumnType] = 
+    columnName ~ dataType ^^ { case columnName ~ dataType => SimpleColumn(columnName,dataType) }
     
   def columnName: Parser[String] = ident ^^ { case ident => ident }
   

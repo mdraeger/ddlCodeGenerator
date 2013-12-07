@@ -15,6 +15,11 @@ class MySqlTableDdlParserSpec extends TableDdlParser with MySQLTableDdlParser wi
       parsing("`rollen`") should equal("rollen")
    }
 
+   "The MySqlTableDdlParser" should "parse column names in back ticks" in {
+      implicit val parserToTest = columnName
+      parsing("`column_name`") should equal("column_name")
+   }
+
    
    "The MySqlTableDdlParser" should "parse data types correctly" in {
       implicit val parserToTest = dataType
@@ -35,7 +40,15 @@ class MySqlTableDdlParserSpec extends TableDdlParser with MySQLTableDdlParser wi
       assertFail("decimal(3)") // too few arguments
    }
 
+   "The MySqlTableDdlParser" should "parse a simple column description correctly" in {
+      implicit val parserToTest = column
+      parsing("`column_name` timestamp") should equal(SimpleColumn("column_name", TimestampType()))
+   }
 
+   "The MySqlTableDdlParser" should "parse a simple table description correctly" in {
+      implicit val parserToTest = table
+      parsing("CREATE TABLE IF NOT EXISTS `table_name` (`column_name` int(10))") should equal (SimpleTableType("table_name", List(SimpleColumn("column_name", IntegerType(10)))))
+   }
 
 
    private def assertFail[T](input: String)(implicit p:Parser[T]) = {

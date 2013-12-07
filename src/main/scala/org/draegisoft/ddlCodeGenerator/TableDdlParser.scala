@@ -7,12 +7,14 @@ import scala.util.parsing.combinator._
  */
 trait TableDdlParser extends JavaTokenParsers {
   
-  def tables: Parser[Map[String, Any]] = rep(table) ^^ { Map() ++ _ }
+  def tables: Parser[List[TableType]] = rep(table) ^^ { List() ++ _ }
   
-  def table: Parser[(String,Any)] = 
-    (("CREATE TABLE IF NOT EXISTS" | "CREATE TABLE" | "TABLE") ~ tableName ~ columns 
-       ^^ { case "TABLE" ~ tableName ~ tableContents => (tableName,tableContents) })
+  def table: Parser[TableType] = tableDeclaration ~ columns ^^ { case tableName ~ columns => SimpleTableType(tableName, columns) }
   
+  def tableDeclaration: Parser[String] = tableDeclStart ~> tableName ^^ {case tableName => tableName} 
+
+  def tableDeclStart: Parser[Any] = ("CREATE TABLE" | "TABLE" | "create table" | "table")
+
   def tableName: Parser[String] = ident ^^ { case ident => ident }
   
   def columns: Parser[List[ColumnType]] = "("~> repsep(column, ",") <~")" ^^ { List() ++ _ }

@@ -1,8 +1,8 @@
 package org.draegisoft.ddlCodeGenerator
 
-sealed trait ColumnType
+sealed abstract class ColumnType(val name: String, val dataType: DataType)
 
-case class SimpleColumn(name: String, dataType: DataType) extends ColumnType
-case class PkColumn(name: String, dataType: DataType) extends ColumnType
-case class ReferenceColumn(name: String, dataType: DataType, target: String) extends ColumnType // use String instead of ColumnType to avoid an additional sweep
+case class SimpleColumn(override val name: String, override val dataType: DataType) extends ColumnType(name, dataType)
+case class PkColumn(override val name: String, override val dataType: DataType) extends ColumnType(name, dataType)
+case class ReferenceColumn(override val name: String, override val dataType: DataType, target: String) extends ColumnType(name, dataType) // use String instead of ColumnType to avoid an additional sweep
 

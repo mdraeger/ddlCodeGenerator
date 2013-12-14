@@ -1,5 +1,5 @@
 package org.draegisoft.ddlCodeGenerator
 
-sealed trait TableType
+sealed abstract class TableType(val name:String)
 
-case class SimpleTableType(name: String, columns: Seq[ColumnType]) extends TableType
+case class SimpleTableType(override val name: String, columns: Seq[ColumnType]) extends TableType(name)
